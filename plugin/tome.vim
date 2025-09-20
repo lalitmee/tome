@@ -134,7 +134,7 @@ function! s:sendTmuxCommand(targetOffset, text)
       return 'not sending to '.proc.' (see config)'
     endif
   endif
-  let cmd = "tmux send-keys -t ".cmdPane." -l ".shellescape(a:text)
+  let cmd = "tmux send-keys -t ".cmdPane." ".shellescape(a:text)." C-m"
   silent call system(cmd)
   return ''
 endfunction
@@ -213,7 +213,7 @@ function! s:prepAndSendCommand(targetOffset, text)
 endfunction
 
 function! s:playLine()
-  call s:prepAndSendCommand(v:count, getline(".")."\n")
+    call s:prepAndSendCommand(v:count, getline("."))
 endfunction
 
 function! s:playSel()
@@ -221,7 +221,7 @@ function! s:playSel()
 endfunction
 
 function! s:playParagraph()
-  call s:prepAndSendCommand(v:count, s:getParagraph() . "\n")
+    call s:prepAndSendCommand(v:count, s:getParagraph())
 endfunction
 
 function! s:mapBufferCRToPlay()
